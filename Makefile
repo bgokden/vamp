@@ -57,24 +57,9 @@ pack:
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
-		--env VAMP_VERSION="katana" \
+		--env VAMP_VERSION=$(VERSION) \
 		$(BUILD_SERVER) \
-			sbt package publish-local
-
-	docker run \
-		--interactive \
-		--tty \
-		--rm \
-		--volume $(CURDIR):/srv/src \
-		--volume $(DIR_SBT):/home/vamp/.sbt \
-		--volume $(DIR_IVY):/home/vamp/.ivy2 \
-		--volume packer:/usr/local/stash \
-		--workdir=/srv/src \
-		--env BUILD_UID=$(shell id -u) \
-		--env BUILD_GID=$(shell id -g) \
-		--env VAMP_VERSION="katana" \
-		$(BUILD_SERVER) \
-			sbt "project bootstrap" pack
+			'sbt package publish-local "project bootstrap" pack'
 
 	rm -rf  $(TARGET)/vamp-$(VERSION)
 	mkdir -p $(TARGET)/vamp-$(VERSION)
