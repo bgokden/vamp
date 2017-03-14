@@ -57,14 +57,14 @@ pack:
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
-		--env VAMP_VERSION=$(VERSION) \
+		--env VAMP_VERSION="katana" \
 		$(BUILD_SERVER) \
 			'sbt package publish-local "project bootstrap" pack'
 
 	rm -rf  $(TARGET)/vamp-$(VERSION)
 	mkdir -p $(TARGET)/vamp-$(VERSION)
 	cp -r $(TARGET)/pack/lib $(TARGET)/vamp-$(VERSION)/
-	mv $$(find $(TARGET)/vamp-$(VERSION)/lib -type f -name "vamp-*-$(VERSION).jar") $(TARGET)/vamp-$(VERSION)/
+	mv $$(find $(TARGET)/vamp-$(VERSION)/lib -type f -name "vamp-*-katana.jar") $(TARGET)/vamp-$(VERSION)/
 
 	docker run \
 		--interactive \
